@@ -10,14 +10,13 @@ import ups.edu.ec.controlador.ControladorDeTexto;
 
 public class VentanaPrincipal extends javax.swing.JFrame {
 
-    private String name;
-
     private ControladorDeTexto controladorDeTexto;
+    private String nombresacho;
 
     public VentanaPrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
-        name = null;
+        nombresacho = null;
         controladorDeTexto = new ControladorDeTexto();
     }
 
@@ -77,6 +76,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        btnSalir.setBackground(new java.awt.Color(255, 255, 0));
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,17 +99,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(29, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCrear)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSalir)
-                            .addComponent(btnLimpiar))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnCrear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,14 +168,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     }
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-
         String nombre = txtRuta.getText();
-
         if (!nombre.contains(".")) {
             do {
-                name = JOptionPane.showInputDialog(this, "Escriba el nombre del archivo: ");
+                nombresacho = JOptionPane.showInputDialog(this, "Escriba el nombre del archivo: ");
 
-            } while (name == null || controladorDeTexto.comprobar(txtRuta.getText(), name));
+            } while (nombresacho == null || controladorDeTexto.comprobar(txtRuta.getText(), nombresacho));
 
             if (!controladorDeTexto.comprobarRuta(txtRuta.getText())) {
                 JOptionPane.showMessageDialog(this, "Ruta incorrecta intentelo de nuevo");
@@ -189,7 +182,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             } else {
                 int opcion = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas crearlo y encriptarlo?");
                 if (opcion == 0) {
-                    String path = controladorDeTexto.crearFichero(txtRuta.getText(), name);
+                    String path = controladorDeTexto.crearFichero(txtRuta.getText(), nombresacho);
                     controladorDeTexto.encriptar(path, txtAreaTexto.getText());
                     JOptionPane.showMessageDialog(this, "Fichero creado, encriptado con exito");
                     limpiar();
